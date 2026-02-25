@@ -30,10 +30,10 @@ A packet experiences several types of delay as it travels from a source to a des
 
 ### 2. Packet Loss
 - **Cause:** Packet loss occurs when a packet arrives at a router and finds that the corresponding queue (buffer) is full. The router has no choice but to **drop** the packet.
-- **Consequences:** The lost packet may be retransmitted by the source or a previous node, or it may not be retransmitted at all, depending on the protocol (e.g., TCP retransmits, UDP does not). Retransmissions consume extra bandwidth and can reduce overall throughput.
+- **Consequences:** The lost packet may be retransmitted by the source or a previous node, or it may not be retransmitted at all, depending on the protocol (e.g., ==TCP retransmits, UDP does not==). Retransmissions consume extra bandwidth and can reduce overall throughput.
 
 ### 3. Throughput
 - **Definition:** The rate (in bits per second) at which bits are actually being transferred between a sender and receiver.
 - **Instantaneous vs. Average:** Throughput can be measured at a specific point in time (instantaneous) or over a longer period (average).
-- **Bottleneck Link:** In a path consisting of multiple links, the end-to-end throughput is constrained by the link with the *lowest* transmission rate. This is known as the **bottleneck link**.
-    - **Example:** If you have a path with two links, one at 100 Mbps and one at 10 Mbps, the maximum achievable throughput for that path will be 10 Mbps.
+- **Bottleneck Link:** ==In a path consisting of multiple links, the end-to-end throughput is constrained by the link with the *lowest* transmission rate. This is known as the **bottleneck link**.==
+    - ==**Example:** If you have a path with two links, one at 100 Mbps and one at 10 Mbps, the maximum achievable throughput for that path will be 10 Mbps.==

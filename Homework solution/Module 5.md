@@ -22,7 +22,7 @@ If both nodes begin transmitting at the same time ($t=0$), the first bit from on
 
 
 #  3. Consider network mentioned in Figure 6.19.png. The router has two ARP module, each with its own ARP table. Is it possible that the same MAC address appears in both tables? 
-
+![[Pasted image 20260225222756.png]]
 
 **No**, it is not possible.
 
@@ -53,6 +53,7 @@ In comparison, the transition from the 32-bit IPv4 space to the 128-bit IPv6 spa
 - **Wasted Capacity:** Pure Aloha suffers from more frequent collisions because there is no coordination regarding when a transmission begins.
 
 # 6. Consider three LANs interconnected by two routers, as shown  (Figure 6.33).
+![[Pasted image 20260225223419.png]]
 
 ```
 a. Assign IP addresses to all of the interfaces. For Subnet 1 use addresses of the form 192.168.1.xxx; for Subnet 2 uses addresses of the form 192.168.2.xxx; and for Subnet 3 use addresses of the form 192.168.3.xxx.
@@ -132,7 +133,7 @@ If the sending host's ARP table is empty, it must first resolve the MAC address 
 
 
 # 7. Consider the single switch VLAN  (Figure 6.25) , and assume an external router is connected to switch port 1. Assign IP addresses to the EE and CS hosts and router interface. Trace the steps taken at both the network layer and the link layer to transfer an IP datagram from an EE host to a CS host (Hint: Reread the discussion of Figure 6.19 in the text).
-
+![[Pasted image 20260225233128.png]]
 In a single-switch VLAN configuration where an external router is used to interconnect subnets, the switch is partitioned into logical networks that require a network-layer device for communication,. Following the architecture in Figure 6.25 and the routing principles in Figure 6.19, the transfer of a datagram occurs through the following steps.
 
 ### **1. Address Assignment**

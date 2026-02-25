@@ -5,8 +5,8 @@ This note covers the core architectural paradigms and requirements of network ap
 ### Application Architectures
 
 1.  **Client-Server Architecture:**
-    - **Server:** An always-on host with a permanent IP address that waits for and services requests from clients. Servers are often located in data centers.
-    - **Client:** An end system that communicates with the server. Clients are intermittently connected, may have dynamic IP addresses, and typically do not communicate directly with other clients.
+    - **Server:** An always-on host with a ==permanent IP== address that waits for and services requests from clients. Servers are often located in data centers.
+    - **Client:** An end system that communicates with the server. Clients are intermittently connected, may have ==dynamic IP== addresses, and typically do not communicate directly with other clients.
     - **Examples:** Web (HTTP), Email (SMTP), File Transfer (FTP).
 
 2.  **Peer-to-Peer (P2P) Architecture:**
@@ -22,9 +22,9 @@ This note covers the core architectural paradigms and requirements of network ap
 
 ### Addressing Processes
 To send a message to a specific process on a remote host, an identifier must be specified that includes:
-1.  **IP Address:** The 32-bit (IPv4) or 128-bit (IPv6) address that uniquely identifies the host on the network.
+1.  **IP Address:** ==The 32-bit (IPv4) or 128-bit (IPv6)== address that uniquely identifies the host on the network.
 2.  **Port Number:** A 16-bit number that identifies the specific process (via its socket) running on that host.
-    - **Well-known ports:** e.g., HTTP server uses port 80, SMTP mail server uses port 25.
+    - **Well-known ports:** e.g., ==HTTP server uses port 80, SMTP mail server uses port 25.==
 
 ### Application-Layer Protocols
 An application-layer protocol defines how an application's processes, running on different end systems, pass messages to each other. It specifies:

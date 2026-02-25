@@ -4,7 +4,7 @@ The World Wide Web is a classic client-server application. The protocol that pow
 
 ### HTTP Overview
 - **Client/Server Model:** A **web browser** acts as the client, requesting objects from a **web server**.
-- **TCP Transport:** HTTP uses TCP as its underlying transport protocol, typically on port 80.
+- **TCP Transport:** ==HTTP uses TCP as its underlying transport protocol, typically on port 80.==
 - **Stateless Protocol:** The HTTP server maintains no information about past client requests. Each request is treated independently. This design simplifies server code but requires other mechanisms (like cookies) to maintain user sessions.
 
 ### HTTP Connections

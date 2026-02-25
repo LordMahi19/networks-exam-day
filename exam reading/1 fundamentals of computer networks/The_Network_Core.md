@@ -1,6 +1,6 @@
 # The Network Core
 
-The network core is the mesh of interconnected routers that connects the Internet's end systems. Its primary function is to move data between hosts. This is achieved through two main approaches: packet switching and circuit switching.
+The network core is the mesh of interconnected routers that connects the Internet's end systems. Its ==primary function is to move data between hosts==. This is achieved through two main approaches: ==packet switching and circuit switching==.
 
 ### Packet Switching
 This is the dominant method used in the Internet.

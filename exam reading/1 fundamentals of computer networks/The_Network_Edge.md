@@ -22,7 +22,7 @@ Access networks connect end systems to the first router (the "edge router") on t
     - It is a **shared** medium; bandwidth is shared among neighbors in the same cable network segment. This can lead to performance degradation if many users are active simultaneously.
 
 - **Home Networks:**
-    - Typically combine a DSL or cable modem with a router, firewall, and Network Address Translation (NAT).
+    - Typically combine a DSL or cable modem with a router, firewall, and ==Network Address Translation (NAT).==
     - Use Ethernet for wired connections and a WiFi access point for wireless connectivity.
 
 - **Enterprise Networks:**
