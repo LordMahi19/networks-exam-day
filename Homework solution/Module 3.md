@@ -65,8 +65,12 @@ Based on the sources, a stop-and-wait protocol using **only negative acknowledgm
 Reliable data transfer over lossy channels typically requires both ACKs and timers to handle cases where neither data nor feedback reaches the intended destination.
 
 
-# 7. Consider a scenario in which Host A and Host B want to send messages to Host C. Hosts A and C are connected by a channel that can lose and corrupt (but not reorder) messages. Hosts B and C are connected by another channel (independent of the channel connecting A and C) with the same properties. The transport layer at Host C should alternate in delivering messages from A and B to the layer above (that is, it should first deliver the data from a packet from A, then the data from a packet from B, and so on). Design a stop-and-wait-like error-control protocol for reliably transferring packets from A and B to C, with alternating delivery at C as described above. Give FSM descriptions of A and C. (Hint: The FSM for B should be essentially the same as for A.) Also, give a description of the packet format(s) used.
-
+# 7
+```
+Consider a scenario in which Host A and Host B want to send messages to Host C. Hosts A and C are connected by a channel that can lose and corrupt (but not reorder) messages. Hosts B and C are connected by another channel (independent of the channel connecting A and C) with the same properties. The transport layer at Host C should alternate in delivering messages from A and B to the layer above (that is, it should first deliver the data from a packet from A, then the data from a packet from B, and so on). Design a stop-and-wait-like error-control protocol for reliably transferring packets from A and B to C, with alternating delivery at C as described above. Give FSM descriptions of A and C. (Hint: The FSM for B should be essentially the same as for A.) Also, give a description of the packet format(s) used.
+```
+![[Pasted image 20260226051616.png]] 
+![[Pasted image 20260226051657.png]]
 Based on the sources provided, the design for this reliable transfer protocol uses the principles of **rdt3.0**, a stop-and-wait protocol that accounts for packet corruption and loss using checksums, sequence numbers, acknowledgments (ACKs), and timers.
 
 ### **Packet Formats**

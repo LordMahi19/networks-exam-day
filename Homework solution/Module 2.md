@@ -80,34 +80,43 @@ Protocols like **TCP** are "connection-oriented" because they require this setup
 # 4. What does stateless protocol mean? Is IMAP stateless? What about SMTP?
 A **stateless protocol** is one in which the server maintains **no information about past client requests**. In such protocols, every request is treated as independent of previous ones, meaning the server does not need to track multi-step exchanges or the "state" of a transaction. Protocols that maintain state are generally more complex because they must reconcile views of that state if a client or server crashes.
 
-Regarding **IMAP** and **SMTP**:
+Both **IMAP** and **SMTP** are **stateful protocols**, but in slightly different ways.
 
-- **HTTP** is explicitly defined by the sources as a **stateless protocol**.
-- The provided sources **do not explicitly state** whether **IMAP** is stateless or stateful. They do describe it as a protocol where messages are stored on a server, providing functions for retrieval, deletion, and folder management.
-- The sources **do not explicitly categorize SMTP** as stateless or stateful. However, they describe SMTP as having a multi-phase process including **handshaking**, **message transfer**, and **closure**, which involves a command/response interaction.
+### **SMTP — stateful during a mail transaction**
 
-_Information from outside the sources (which you may want to independently verify):_ In general networking terminology, **IMAP** and **SMTP** are considered **stateful** protocols because they maintain session information (such as the current state of a mailbox or the progress of an email transaction) during a connection.
+SMTP keeps track of where you are in the command sequence (HELO → MAIL FROM → RCPT TO → DATA).  
+Each step depends on the previous one, so the server maintains state for the duration of that session.
+
+### **IMAP — stateful across the whole session**
+
+IMAP maintains long‑lived sessions where the server remembers:
+
+- which mailbox you selected
+- message flags
+- synchronization state
+- UID tracking
+
+It’s designed to keep context so clients can stay connected and stay in sync.
 
 # 5. Why are MX records needed? Would it not be enough to use a CNAME record? (Assume the email client looks up email addresses through a Type A query and that the target host only runs an email server.)
 
-A **stateless protocol** (such as HTTP) is one where the server maintains **no information about past client requests**, treating each exchange as independent. The sources identify **IMAP and SMTP** as email application-layer protocols but **do not explicitly categorize** them as stateless or stateful.
-
 **MX records** are required to provide **mail server aliasing**, which maps a domain name to the specific hostname of its mail server. While a **CNAME** provides a general alias for a canonical name, an **MX record** is the specialized DNS resource type used specifically to identify which host handles SMTP traffic for a domain.
 
-_Information from outside the sources:_ In standard networking, **IMAP and SMTP are stateful** because they maintain session information (like login states or the progress of a multi-step email transfer) during a connection.
+**MX records** tell the internet _which mail server should receive email_ for a domain.  
+They act like a special pointer that says, “If you want to send mail to this domain, deliver it to this specific server.”
 
+A **CNAME** is just a general-purpose alias — it lets one hostname point to another.  
+But **you can’t use a CNAME for email routing**. Email delivery specifically relies on **MX records**, because they are designed to work with SMTP mail servers.
 # 6. Besides network-related considerations such as delay, loss, and bandwidth performance, there are other important factors that go into designing a CDN server selection strategy. What are they? 
 
+CDN server selection isn’t just about raw network speed. Several other factors shape how CDNs decide which server should handle a user’s request:
 
-Beyond standard network performance, CDN server selection strategies involve several key factors:
-
-- **Content Availability:** CDNs must decide which specific content to place in which nodes to bring services close to end users.
-- **Load Distribution:** Distributed databases like **DNS** are used to map a single name to multiple IP addresses, balancing traffic across replicated servers.
-- **Redirection Mechanisms:** Selection is managed via **manifest files** that provide URLs for content chunks or through DNS **CNAME** records that redirect clients to a CDN’s authoritative server.
-- **Geographic Deployment:** Strategies include "entering deep" by placing servers directly in **access networks** or "bringing home" by housing large clusters in **Points of Presence (POPs)** near those networks.
-- **Client-Side Intelligence:** Protocols like **DASH** allow the client to dynamically choose coding rates and server locations based on its own bandwidth estimations and needs.
-- **IP Protocol Compatibility:** CDNs often use **dual-stack (IPv4 and IPv6)** options to ensure connectivity across diverse network environments and meet regulatory requirements.
-
+- **Content Placement:** CDNs choose which files to store at which servers so content stays close to users.
+- **Balancing Traffic:** Systems like **DNS** can point one domain name to several IP addresses, spreading user requests across multiple servers.
+- **Redirecting Users:** CDNs guide users to the right server using **manifest files** (which list URLs for video segments) or DNS **CNAME** records (which redirect a request to the CDN’s own servers).
+- **Where Servers Are Located:** Some CDNs place servers deep inside local access networks (“enter deep”), while others build large clusters at major **Points of Presence (POPs)** near those networks (“bring home”).
+- **Smart Clients:** Technologies like **DASH** let the user’s device choose the best video quality and even the best server based on its own bandwidth measurements.
+- **Support for IPv4 and IPv6:** CDNs often run both protocols so they can serve all types of networks and meet regulatory requirements.
 
 # 7. Consider an HTTP client that wants to retrieve a Web document at a given URL. The IP address of the HTTP server is initially unknown. What transport and application-layer protocols besides HTTP are needed in this scenario? 
 
@@ -133,10 +142,10 @@ In this scenario, to retrieve a Web document from a URL when the IP address is i
 
 
 # question 8
-```python
+```
 Consider the following string of ASCII characters that were captured by Wireshark when the browser sent an HTTP GET message (i.e., this is the actual content of an HTTP GET message). The characters _<cr><lf>_ are carriage return and line-feed characters (that is, the italized character string _<cr>_ in the text below represents the single carriage-return character that was contained at that point in the HTTP header). Answer the following questions, indicating where in the HTTP GET message below you find the answer.[P4]
 
-GET /cs453/index.html HTTP/1.1_<cr><lf>_Host: gai a.cs.umass.edu_<cr><lf>_User-Agent: Mozilla/5.0 ( Windows;U; Windows NT 5.1; en-US; rv:1.7.2) Gec ko/20040804 Netscape/7.2 (ax) _<cr><lf>_Accept:ex t/xml, application/xml, application/xhtml+xml, text /html;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5 PRObLEMs 199 _<cr><lf>_Accept-Language: en-us,en;q=0.5_<cr><lf>_AcceptEncoding: zip,deflate_<cr><lf>_Accept-Charset: ISO -8859-1,utf-8;q=0.7,*;q=0.7_<cr><lf>_Keep-Alive: 300_<cr> <lf>_Connection:keep-alive_<cr><lf><cr><lf>_  
+GET /cs453/index.html HTTP/1.1_<cr><lf>_Host: gaia.cs.umass.edu_<cr><lf>_User-Agent: Mozilla/5.0 ( Windows;U; Windows NT 5.1; en-US; rv:1.7.2) Gec ko/20040804 Netscape/7.2 (ax) _<cr><lf>_Accept:ex t/xml, application/xml, application/xhtml+xml, text /html;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5 PRObLEMs 199 _<cr><lf>_Accept-Language: en-us,en;q=0.5_<cr><lf>_AcceptEncoding: zip,deflate_<cr><lf>_Accept-Charset: ISO -8859-1,utf-8;q=0.7,*;q=0.7_<cr><lf>_Keep-Alive: 300_<cr> <lf>_Connection:keep-alive_<cr><lf><cr><lf>_  
 
 
 1. What is the URL of the document requested by the browser? 

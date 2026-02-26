@@ -38,3 +38,7 @@ Important sections:
 - Transmission Control Protocol (TCP)
 - **DASH (Dynamic, Adaptive Streaming over HTTP)**
 - **Content Distribution Networks (CDNs)**
+- **IMAP** → _Internet Message Access Protocol_
+- **SMTP** → _Simple Mail Transfer Protocol_
+- **Points of Presence (POPs)** 
+- **Content Delivery Network**. (CDN)
