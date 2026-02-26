@@ -1,7 +1,15 @@
 # What is the role of the forwarding table within a router?
-Within a router's **data plane**, the forwarding table (also called a flow table) performs the **local action** of transferring arriving packets from an input link to the appropriate output link. It operates on a **"match plus action"** principle, where header bits are compared against entries to determine if a packet should be forwarded, dropped, or modified. For traditional destination-based forwarding, routers utilize **longest prefix matching** to select the most specific entry for a packet's destination IP address. In **Software-Defined Networking (SDN)**, these tables are more flexible, matching against multiple header fields across different layers to enable complex network-wide behaviors. To ensure efficiency at "line speed," these tables are typically stored in **decentralized input port memory** and perform lookups in a **nanosecond timeframe**.
+
+- It stores the best next-hop path for each destination network.
+- The router uses it to decide **where to send incoming packets**.
+- It ensures packets are forwarded efficiently based on IP addresses.
+---
+# b) Look at following picture. Write a static forwarding table for **router x**. A cloud in the picture denotes a (sub) network.  If you have problem forming the routing table, please take look in the video "[What is a routing (forwarding) table (Video)](https://moodle.lut.fi/mod/lti/view.php?id=1741382)" in the course page.
+![[Pasted image 20260226011612.png]]
 # question 1C
+```
 What are the smallest network masks (hold smallest possible number of hosts) for networks, where are only hosts 192.168.1.1, 192.168.1.3 and 192.168.1.4? What is smallest network mask for network with hosts 192.168.1.1-192.168.1.130? How about if we need to have at least 560 hosts in our subnetwork?
+```
 
 Based on the sources and standard networking principles, here are the smallest network masks (CIDR notation) for your scenarios. **CIDR** uses the format `a.b.c.d/x`, where `x` is the number of bits in the subnet portion.
 
@@ -13,7 +21,9 @@ Based on the sources and standard networking principles, here are the smallest n
 
 **Note:** The sources define the `/x` notation and provide examples like `/24`, but the specific binary calculations for address capacity (e.g., $2^{10} = 1024$) are based on standard mathematical logic not explicitly detailed in the provided text. You may wish to independently verify these calculations.
 # question 2
+```
 Switching in a router forwards data from an input port an output port. What is the advantage of switching via an interconnection network over switching via memory and switching via bus?
+```
 
 An **interconnection network** (such as a crossbar or multistage switch) provides a significant advantage over memory and bus-based switching by enabling **parallelism**.
 
@@ -23,7 +33,9 @@ An **interconnection network** (such as a crossbar or multistage switch) provide
 
 While highly efficient, if the fabric is slower than the combined input port speed, **Head-of-the-Line (HOL) blocking** can still occur, where a packet at the front of a queue prevents others behind it from being forwarded.
 # question 3
+```
 Suppose an application generates chunks of 40 bytes of data every 20 msec, and each chunk gets encapsulated in a TCP segment and then an IP datagram. What percentage of each datagram will be overhead, and what percentage will be application data?
+```
 
 To determine the percentage of overhead and application data in the IP datagram, we must first calculate the total size of the datagram by accounting for the encapsulation process.
 
@@ -33,7 +45,7 @@ Based on the sources, the breakdown is as follows:
 - **TCP Overhead:** When the data is encapsulated into a TCP segment, a transport-layer header ($H_t$) is added. The standard TCP header is **20 bytes**.
 - **IP Overhead:** When the TCP segment is further encapsulated into an IP datagram, a network-layer header ($H_n$) is added. The standard IP header is also **20 bytes**.
 
-Total Datagram Calculation**
+**Total Datagram Calculation**
 
 The total size of each IP datagram is the sum of the application data and the protocol overhead:
 
@@ -48,11 +60,13 @@ Percentage Breakdown**
 
 In this scenario, exactly **50% of each datagram consists of protocol overhead**, while the remaining **50% is actual application data**.
 # question 4
+```
 Suppose you purchase a wireless router and connect it to your cable modem. Also suppose that your ISP dynamically assigns your connected device (that is, your wireless router) one IP address. Also suppose that you have five PCs at home that use 802.11 to wirelessly connect to your wireless router. How are IP addresses assigned to the five PCs? Does the wireless router use NAT? Why or why not?
+```
 
-In the scenario described, IP addresses are assigned to the five PCs through a protocol called **Dynamic Host Configuration Protocol (DHCP)**, and the wireless router **does use Network Address Translation (NAT)** to manage their connection to the Internet,,.
+In the scenario described, IP addresses are assigned to the five PCs through a protocol called **Dynamic Host Configuration Protocol (DHCP)**, and the wireless router **d==oes use Network Address Translation (NAT)**== to manage their connection to the Internet
 
-IP Address Assignment via DHCP**
+IP Address Assignment via **DHCP**
 
 The five PCs obtain their IP addresses dynamically when they connect to the wireless network.
 
@@ -60,7 +74,7 @@ The five PCs obtain their IP addresses dynamically when they connect to the wire
 - **The Process:** When a PC joins the network, it broadcasts a "DHCP discover" message to find the server,. The router responds with a "DHCP offer" that includes an available IP address, a network mask, the address of the first-hop router (the default gateway), and the address of a DNS server,,.
 - **Private Addresses:** These PCs are assigned **private IP addresses** (typically with prefixes like 10.0.0/8, 172.16/12, or 192.168/16) that are unique within your home network but are not visible or addressable by the outside world,.
 
-The Role of NAT**
+The Role of **NAT**
 
 The wireless router uses NAT because your ISP has only assigned a **single public IP address** to your router, but you have multiple devices (the five PCs) that need to communicate with the Internet simultaneously,.
 
@@ -69,7 +83,7 @@ The wireless router uses NAT because your ISP has only assigned a **single publi
 - **Address Sharing:** NAT allows all devices on your local network to **share that one public IPv4 address**.
 - **Translation Table:** The router maintains a **NAT translation table** to keep track of these connections,.
 - **Outgoing Traffic:** When a PC sends a datagram to the Internet, the NAT router replaces the PC's private IP address and source port number with its own public IP address and a new, unique port number,.
-- **Incoming Traffic:** When a response arrives from the Internet, the router uses the destination port number to look up the corresponding private IP address in its translation table and forwards the datagram to the correct PC,.
+- **Incoming Traffic:** When a response arrives from the Internet, the router uses the destination port number to look up the corresponding private IP address in its translation table and forwards the datagram to the correct PC
 
 **Why NAT is used:** Beyond allowing multiple devices to share a single IP address, NAT provides **security** because devices inside the local network are not directly visible to the outside world. It also allows you to change the internal addresses of your devices or switch ISPs without needing to reconfigure the entire local network.
 # What is meant by the term “route aggregation”? Why is it useful for a router to perform route aggregation?
@@ -113,26 +127,28 @@ According to the sources, the NAT router maintains a **translation table** to en
 # Compare and contrast the IPv4 and the IPv6 header fields. Do they have any fields in common?
 While IPv6 was designed to streamline processing, it retains several functional similarities to IPv4.
 
-Common Fields**
+**Common Fields**
 
 - **Version:** Both begin with a 4-bit version field to identify the protocol.
 - **Addresses:** Both contain **Source and Destination Addresses**, though IPv4 uses 32 bits and IPv6 uses 128 bits.
-- **Lifetime:** IPv4's **TTL (Time to Live)** is functionally equivalent to the IPv6 **Hop Limit**; both are decremented at each router to prevent infinite loops.
+- **Lifetime:** ==IPv4's **TTL (Time to Live)** is functionally equivalent to the IPv6 **Hop Limit**;== both are decremented at each router to prevent infinite loops.
 - **Length:** IPv4 has a **Total Length** field, while IPv6 has a **Payload Length** field.
 - **Upper-Layer Protocol:** IPv4’s **Upper Layer** field serves the same purpose as the IPv6 **Next Header** field, identifying the encapsulated protocol (e.g., TCP or UDP).
 - **Traffic Class:** IPv4's **Type of Service (ToS)** matches the functional intent of the IPv6 **Priority** field.
 
-Key Contrasts**
+**Key Contrasts**
 
 - **Fragmentation:** IPv4 includes an **Identifier, Flags, and Fragment Offset** to handle packet fragmentation at routers. IPv6 **removed fragmentation** from the main header to speed up processing.
 - **Checksum:** IPv4 has a **Header Checksum**; this was removed in IPv6 to reduce router overhead.
 - **Options and Header Length:** IPv4 has a variable header length because of **Options**, requiring a **Header Length** field. IPv6 uses a fixed 40-byte header, making the length field unnecessary.
 - **Flow Labeling:** IPv6 introduces a new 20-bit **Flow Label** to identify datagrams within a specific "flow," a concept not defined in the IPv4 header.
 # question 9
+```
  Suppose two packets arrive to two different input ports of a router at exactly the same time. Also suppose there are no other packets anywhere in the router
 a.  Suppose the two packets are to be forwarded to two different output ports. Is it possible to forward the two packets through the switch fabric at the same time when the fabric uses a shared bus?
 b.  Suppose the two packets are to be forwarded to two different output ports. Is it possible to forward the two packets through the switch fabric at the same time when the fabric uses switching via memory?
 c.   Suppose the two packets are to be forwarded to the same output port. Is it possible to forward the two packets through the switch fabric at the same time when the fabric uses a crossbar? 
+```
 
 Based on the provided sources, here is the response to your query regarding router switching fabrics:
 
@@ -142,7 +158,9 @@ Based on the provided sources, here is the response to your query regarding rout
 
 **c. Crossbar with the Same Output Port** **No**, it is not possible to forward two packets to the same output port at the same time, even when using a crossbar or interconnection network. While a crossbar is designed to **exploit parallelism** by allowing multiple packets to be forwarded to _different_ output ports simultaneously, it cannot overcome **output port contention**. The sources specify that if two packets are destined for the same output port, only one can be transferred at a time, while the other must wait in a queue. This can lead to **Head-of-the-Line (HOL) blocking**, where a packet at the front of an input queue prevents others from moving forward because its destination port is currently busy.
 # question 10
+```
 Suppose datagrams are limited to 1,500 bytes (including header) between source Host A and destination Host B. Assuming a 20-byte IP header, how many datagrams would be required to send an MP3 consisting of 5 million bytes? Explain how you computed your answer.
+```
 
 To determine how many datagrams are required to send the MP3 file, we must first identify the payload capacity of each datagram and then divide the total file size by that capacity.
 
@@ -151,25 +169,28 @@ Given Information**
 - **Maximum datagram size:** 1,500 bytes (including the header).
 - **IP header size:** 20 bytes.
 
-Equation and Computation**
+ **Equation  and Computation**
 First, we calculate the amount of application data (payload) that can be carried in a single datagram: $$\text{Payload per Datagram} (P) = \text{Total Datagram Limit} - \text{IP Header Size}$$ $$P = 1,500 \text{ bytes} - 20 \text{ bytes} = 1,480 \text{ bytes}$$
 
 Next, we calculate the total number of datagrams ($N$) required by dividing the total file size by the payload capacity: $$N = \frac{\text{Total File Size}}{\text{Payload per Datagram}}$$ $$N = \frac{5,000,000}{1,480} \approx 3,378.38$$
 
 Since you cannot send a fraction of a datagram, you must round up to account for the remaining data. **Total datagrams required = 3,379**
 
-Explanation of Computation**
+**Explanation of Computation**
 1. **Determine Payload Capacity:** According to the sources, a network-layer datagram is formed by encapsulating transport-layer data with a network-layer header. Because the total size is limited to 1,500 bytes and the header consumes 20 bytes, only **1,480 bytes** of the actual MP3 file can fit into each packet.
 2. **Fragmentation of Data:** In computer networking, large application messages must be broken into smaller chunks, known as packets or datagrams, to be transmitted across the network.
 3. **Final Datagram Count:** By dividing the 5,000,000 bytes by the 1,480-byte capacity, we find that **3,378 datagrams** will be completely filled. The remaining 560 bytes (calculated as $5,000,000 \pmod{1,480}$) require a **3,379th datagram** to complete the transmission.
 # question 11
+```
 Consider the network setup below (Figure 4.2). Suppose that the ISP instead assigns the router the address 24.34.112.235 and that the network address of the home network is 192.168.1/24.
 a. Assign addresses to all interfaces in the home network.
 b. Suppose each host has two ongoing TCP connections, all to port 80 at host 128.119.40.86. Provide the six corresponding entries in the NAT translation table.
+```
+![[Pasted image 20260226025905.png]]
 
 Based on the network setup in Figure 4.2 of the sources, here are the address assignments and NAT translation table entries:
 
-a. Address Assignments for Home Network Interfaces**
+**a. Address Assignments for Home Network Interfaces**
 
 In a **/24 network**, the first 24 bits (the first three octets) represent the subnet, while the remaining bits identify individual hosts. For the network **192.168.1/24**, we can assign the following addresses to the interfaces:
 
@@ -197,7 +218,9 @@ The six corresponding entries in the NAT translation table would be:
 
 _(Note: The port numbers 5001-5006 for the WAN side and 3345-3346 for the LAN side are examples based on the numbering patterns provided in Figure 4.2. In practice, any available port number above the well-known range could be used, provided the WAN side ports are unique.)_
 # question 12
+```
 In this problem we’ll explore the impact of NATs on P2P applications. Suppose a peer with username Arnold discovers through querying that a peer with username Bernard has a file it wants to download. Also suppose that Bernard and Arnold are both behind a NAT. Try to devise a technique that will allow Arnold to establish a TCP connection with Bernard without application specific NAT configuration. If you have difficulty devising such a technique, discuss why.
+```
 
 To allow Arnold to establish a TCP connection with Bernard when both are behind a NAT, they can use a technique called **TCP Hole Punching** involving an intermediate signaling server.
 

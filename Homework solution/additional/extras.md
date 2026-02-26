@@ -32,4 +32,9 @@ Important sections:
 - Network Interface Card's (NIC
 - Local Area Networks (LANs)
 - address resolution protocol (ARP)
-- 
+- **Dynamic Host Configuration Protocol (DHCP)**
+- TTL (Time to Live)
+- **User Datagram Protocol (UDP)**
+- Transmission Control Protocol (TCP)
+- **DASH (Dynamic, Adaptive Streaming over HTTP)**
+- **Content Distribution Networks (CDNs)**

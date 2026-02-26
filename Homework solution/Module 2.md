@@ -53,7 +53,7 @@ When you combine the IP Address and the Port Number (and the protocol, like TCP 
     - `80` = The Process (Web Server)
         
 
-... [Sockets | IP Address With Port Number](https://www.youtube.com/watch?v=7NAElB5nv20) ...
+https://www.youtube.com/watch?v=7NAElB5nv20
 
 This video is relevant because it visually explains how sockets combine IP addresses and port numbers to enable process-to-process communication.
 

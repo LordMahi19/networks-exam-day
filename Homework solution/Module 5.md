@@ -136,6 +136,29 @@ If the sending host's ARP table is empty, it must first resolve the MAC address 
 ![[Pasted image 20260225233128.png]]
 In a single-switch VLAN configuration where an external router is used to interconnect subnets, the switch is partitioned into logical networks that require a network-layer device for communication,. Following the architecture in Figure 6.25 and the routing principles in Figure 6.19, the transfer of a datagram occurs through the following steps.
 
+---
+### **IP Address Assignments**
+
+We need two separate subnets for the two VLANs. Let's use standard private IP ranges.
+
+**Electrical Engineering (EE) - VLAN 10 (Ports 2–8)**
+
+- **Subnet:** 192.168.1.0/24
+    
+- **EE Host A (Sender):** 192.168.1.2 (MAC: EE-MAC)
+    
+- **Router Sub-interface 1 (Default Gateway):** 192.168.1.1 (MAC: R-MAC)
+    
+
+**Computer Science (CS) - VLAN 20 (Ports 9–15)**
+
+- **Subnet:** 192.168.2.0/24
+    
+- **CS Host B (Receiver):** 192.168.2.2 (MAC: CS-MAC)
+    
+- **Router Sub-interface 2 (Default Gateway):** 192.168.2.1 (MAC: R-MAC)
+(Note: Routers often use the same physical MAC address for all logical sub-interfaces on a single port).
+---
 ### **1. Address Assignment**
 
 To facilitate routing between the two VLANs, we assign the following IP and MAC addresses:
@@ -187,7 +210,7 @@ Downloading a web page from a newly powered-on PC involves a coordinated sequenc
 
 Before the PC can communicate with the Internet, it needs an IP address. Since the caches are empty, the host uses the **Dynamic Host Configuration Protocol (DHCP)**.
 
-- **DHCP Discover:** The PC creates a DHCP discover message and encapsulates it in a UDP segment, which is then placed in an IP datagram with a broadcast destination IP ($255.255.255.255$) and a MAC-layer broadcast address ($FF:FF:FF:FF:FF:FF$).
+- **DHCP Discover:** The client that joins broadcasts a DHCP discover message like is “is there a DHCP server out there?” to find available servers.
 - **DHCP Offer & Request:** A DHCP server (often built into the router) responds with a **DHCP Offer**, suggesting an IP address for the client. The client then sends a **DHCP Request** to confirm it wants that address.
 - **DHCP ACK (Obtaining Gateway IP):** The server sends a **DHCP ACK**, which provides the client with its own IP address, the subnet mask, and—crucially—the **IP address of the first-hop (gateway) router** and the IP address of the local DNS server.
 
@@ -208,7 +231,7 @@ To download a web page (e.g., `www.google.com`), the browser must find the desti
 
 ### **4. Establishing a Transport Connection (TCP)**
 
-With the web server's IP address known, the client must establish a connection to port 80 (HTTP) or 443 (HTTPS).
+With the web server's IP address known, the client must establish a connection to ==port 80 (HTTP) or 443 (HTTPS).==
 
 - **TCP 3-Way Handshake:**
     1. **SYN:** The client sends a TCP segment with the SYN bit set to the web server.

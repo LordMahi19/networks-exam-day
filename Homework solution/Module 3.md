@@ -30,12 +30,25 @@ Voice and video traffic frequently use TCP over UDP for the following reasons:
 
 # 4. Is it possible for an application to enjoy reliable data transfer even when the application runs over UDP? If so, how? 
 
-**Yes**, it is possible for an application to achieve **reliable data transfer** even when running over UDP.
+Yes, an app **can** make data transfer reliable even when using **UDP**, which by itself does _not_ guarantee delivery.
 
-This is accomplished by **implementing reliability and error control mechanisms at the application layer**,. Since UDP itself provides "no-frills," unreliable delivery, the application must handle tasks such as loss detection and retransmission itself,.
+To do this, the **application adds its own reliability features**, such as:
 
-A prominent example of this is **HTTP/3**, which uses the **QUIC protocol**; QUIC runs on top of UDP but incorporates its own **application-level reliability** and congestion control,,.
+- checking whether data was lost
+- resending missing data
+- making sure everything arrives in the right order
 
+UDP doesn’t handle any of that, so the app must do it on its own.
+
+A real-world example is **HTTP/3**, which uses the **QUIC protocol**. QUIC runs on top of UDP but includes its own built‑in system for:
+
+- reliable delivery
+- congestion control
+- secure connections
+
+So even though UDP is “unreliable,” QUIC—and therefore HTTP/3—still achieves reliable communication by handling the hard parts at the application layer.
+
+---
 # 5. Suppose that a Web server runs in Host C on port 80. Suppose this Web server uses persistent connections, and is currently receiving requests from two different Hosts, A and B. Are all of the requests being sent through the same socket at Host C? If they are being passed through different sockets, do both of the sockets have port 80? Discuss and explain.
 
 The requests are passed through **different sockets** at Host C. In TCP, each socket is uniquely identified by a **4-tuple** consisting of the source IP address, source port number, destination IP address, and destination port number.
